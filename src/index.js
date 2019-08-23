@@ -9,7 +9,7 @@ const GAME_HEIGHT = 600;
 
 let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT);
 
-new InputHandler();
+new InputHandler(paddle);
 
 let lastTime = 0;
 

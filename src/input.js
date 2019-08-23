@@ -1,18 +1,15 @@
+var left = "LEFT";
+var right = "RIGHT";
+
 export default class InputHandler {
-	constructor() {
+	constructor(paddle) {
 		document.onkeydown = function(event) {
 			switch (event.keyCode) {
 				case 37:
-					alert("Left key pressed");
-					break;
-				case 38:
-					alert("Up key pressed");
+					paddle.move(left);
 					break;
 				case 39:
-					alert("Right key pressed");
-					break;
-				case 40:
-					alert("Down key pressed");
+					paddle.move(right);
 					break;
 				default:
 					break;

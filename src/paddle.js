@@ -3,6 +3,12 @@ export default class Paddle {
 		this.width = 150;
 		this.height = 30;
 
+		this.maxSpeed = 15;
+		this.speed = 0;
+
+		this.leftedge = 0;
+		this.rightedge = gameWidth - this.width;
+
 		this.position = {
 			x: gameWidth / 2 - this.width / 2,
 			y: gameHeight - this.height - 10
@@ -16,5 +22,34 @@ export default class Paddle {
 
 	update(deltaTime) {
 		if (!deltaTime) return;
+
+		// Move paddle according to speed
+		this.position.x += this.speed;
+
+		// Do not allow motion past edges of game area
+		if (this.position.x <= this.leftedge) {
+			this.position.x = this.leftedge;
+			this.speed = 0;
+		} else if (this.position.x >= this.rightedge) {
+			this.position.x = this.rightedge;
+			this.speed = 0;
+		}
+
+		// Decrease absolute speed (deceleration)
+		if (this.speed < 0) {
+			this.speed += 1;
+		} else if (this.speed > 0) {
+			this.speed -= 1;
+		}
+
+		// anything else here???
+	}
+
+	move(dir) {
+		if (dir === "LEFT" && this.position.x > this.leftedge) {
+			this.speed -= 5;
+		} else if (dir === "RIGHT" && this.position.x < this.rightedge) {
+			this.speed += 5;
+		}
 	}
 }
