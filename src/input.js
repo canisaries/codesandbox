@@ -1,17 +1,22 @@
 export default class InputHandler {
 	constructor() {
-		document.addEventListener("keydown", event => {
-			switch (event.keycode) {
+		document.onkeydown = function(event) {
+			switch (event.keyCode) {
 				case 37:
-					alert("move left");
+					alert("Left key pressed");
+					break;
+				case 38:
+					alert("Up key pressed");
 					break;
 				case 39:
-					alert("move right");
+					alert("Right key pressed");
+					break;
+				case 40:
+					alert("Down key pressed");
 					break;
 				default:
-					alert("henlo");
 					break;
 			}
-		});
+		};
 	}
 }
