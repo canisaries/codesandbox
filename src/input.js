@@ -1,33 +1,48 @@
 var left = "LEFT";
 var right = "RIGHT";
 
-
 export default class InputHandler {
-
 	constructor(paddle) {
-		this.keypressed = 0;
+		this.leftpressed = false;
+		this.rightpressed = false;
 		this.paddle = paddle;
-		document.addEventListener("keydown", event => {
-			this.keypressed = event.keyCode;
-		});
-		document.addEventListener("keyup", event => {
-			this.keypressed = 0;
-		});
-	}
 
-	handlekey() {
-		switch (this.keypressed) {
-				case 0:
-					break;
+		// Event listeners
+
+		document.addEventListener("keydown", event => {
+			switch (event.keyCode) {
 				case 37:
-					this.paddle.move(left);
+					this.leftpressed = true;
 					break;
 				case 39:
-					this.paddle.move(right);
+					this.rightpressed = true;
 					break;
 				default:
 					break;
-		};
+			}
+		});
+
+		document.addEventListener("keyup", event => {
+			switch (event.keyCode) {
+				case 37:
+					this.leftpressed = false;
+					break;
+				case 39:
+					this.rightpressed = false;
+					break;
+				default:
+					break;
+			}
+		});
+	}
+
+	handlekeys() {
+		if (this.leftpressed) {
+			this.paddle.move(left);
+		}
+		if (this.rightpressed) {
+			this.paddle.move(right);
+		}
 	}
 }
 

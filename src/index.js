@@ -17,7 +17,7 @@ function gameLoop(timestamp) {
 	let deltaTime = timestamp - lastTime;
 	lastTime = timestamp;
 
-	iHandler.handlekey();
+	iHandler.handlekeys();
 
 	if (deltaTime) {
 		ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
