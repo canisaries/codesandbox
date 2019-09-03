@@ -9,13 +9,15 @@ const GAME_HEIGHT = 600;
 
 let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT);
 
-new InputHandler(paddle);
+let iHandler = new InputHandler(paddle);
 
 let lastTime = 0;
 
 function gameLoop(timestamp) {
 	let deltaTime = timestamp - lastTime;
 	lastTime = timestamp;
+
+	iHandler.handlekey();
 
 	if (deltaTime) {
 		ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
