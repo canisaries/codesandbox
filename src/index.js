@@ -24,6 +24,7 @@ function gameLoop(timestamp) {
 	if (deltaTime) {
 		ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 		paddle.update();
+		ball.update(deltaTime);
 		paddle.draw(ctx);
 		ball.draw(ctx);
 	}

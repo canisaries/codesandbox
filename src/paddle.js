@@ -31,10 +31,10 @@ export default class Paddle {
 		// Do not allow motion past edges of game area
 		if (this.position.x <= this.leftedge) {
 			this.position.x = this.leftedge;
-			this.speed = this.speed * -1;
+			this.speed = 0;
 		} else if (this.position.x >= this.rightedge) {
 			this.position.x = this.rightedge;
-			this.speed = this.speed * -1;
+			this.speed = 0;
 		}
 
 		// Decrease absolute speed (deceleration)
