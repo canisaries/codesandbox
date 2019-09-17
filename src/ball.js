@@ -1,10 +1,19 @@
 export default class Ball {
 	constructor(game) {
+		this.game = game;
 		this.image = document.getElementById("img_ball");
-		this.x = game.gameWidth / 2;
-		this.y = game.gameHeight / 2;
 		this.diameter = 16;
-		this.speed = { x: 4, y: 4 };
+
+		this.startstate = {
+			x: game.gameWidth / 2,
+			y: game.gameHeight / 2,
+			dx: 4,
+			dy: 4
+		};
+		this.x = this.startstate.x;
+		this.y = this.startstate.y;
+		this.speed = { x: this.startstate.dx, y: this.startstate.dy };
+
 		this.screendims = { x: game.gameWidth, y: game.gameHeight };
 	}
 
@@ -16,15 +25,61 @@ export default class Ball {
 		this.x += this.speed.x;
 		this.y += this.speed.y;
 
-		// edge checks
+		// paddle check
 
-		if (this.x + this.diameter > this.screendims.x || this.x < 0) {
-			this.speed.x *= -1;
-		}
-		if (this.y + this.diameter > this.screendims.y || this.y < 0) {
+		if (this.paddleHit()) {
 			this.speed.y *= -1;
 		}
 
-		// anythiing else?
+		// edge checks
+
+		// sides edges
+		if (this.x + this.diameter > this.screendims.x || this.x < 0) {
+			this.speed.x *= -1;
+		}
+		// top edge
+		if (this.y < 0) {
+			this.speed.y *= -1;
+		}
+		// bottom edge
+		if (this.y + this.diameter > this.screendims.y) {
+			// defeat, reset pos
+			this.reset();
+		}
+
+		// anything else?
+	}
+
+	paddleHit() {
+		let paddle = this.game.paddle;
+
+		// check x
+
+		let center_of_ball = this.x + this.diameter / 2;
+		// If ball is not within paddle's horizontal coordinates, no hit
+		if (center_of_ball < paddle.x || center_of_ball > paddle.x + paddle.width) {
+			return false;
+		}
+
+		// check y
+
+		let bottom_of_ball = this.y + this.diameter;
+		// If bottom of ball was above paddle top last frame
+		// but now is below or on it AND the ball is moving down, it has hit
+		if (
+			bottom_of_ball > paddle.y &&
+			bottom_of_ball - this.speed.y <= paddle.y &&
+			this.speed.y > 0
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	reset() {
+		this.x = this.startstate.x;
+		this.y = this.startstate.y;
+		this.speed = { x: this.startstate.dx, y: this.startstate.dy };
 	}
 }
