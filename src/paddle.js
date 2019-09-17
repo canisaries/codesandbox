@@ -3,7 +3,7 @@ export default class Paddle {
 		this.width = 150;
 		this.height = 30;
 
-		this.maxSpeed = 15;
+		this.maxSpeed = 20;
 		this.speed = 0;
 
 		this.leftedge = 0;
@@ -39,9 +39,9 @@ export default class Paddle {
 
 		// Decrease absolute speed (deceleration)
 		if (this.speed < 0) {
-			this.speed += 1;
+			this.speed += 2;
 		} else if (this.speed > 0) {
-			this.speed -= 1;
+			this.speed -= 2;
 		}
 
 		// anything else here???
