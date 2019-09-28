@@ -1,19 +1,29 @@
+import { detectCollision, HITDATA } from "./collisiondetection.js";
+
 export default class Brick {
 	constructor(game, x, y) {
-    this.game = game;
+		this.game = game;
 		this.image = document.getElementById("img_brick");
-		this.w = 75;
-    this.h = 25;
-    this.x = x;
-    this.y = y;
-  }
+		this.width = 75;
+		this.height = 25;
+		this.x = x;
+		this.y = y;
+		this.remove = false;
+	}
 
-  update(deltaTime) {
-    // check if hit and from where
-  }
+	update(deltaTime) {
+		let hit = detectCollision(this, this.game.paddle);
 
-  draw(ctx) {
-    ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
-  }
-  
-  }
+		if (hit === HITDATA.VERTICAL) {
+			this.speed.y *= -1;
+			this.remove = true;
+		} else if (hit === HITDATA.HORIZONTAL) {
+			this.speed.x *= -1;
+			this.remove = true;
+		}
+	}
+
+	draw(ctx) {
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+	}
+}

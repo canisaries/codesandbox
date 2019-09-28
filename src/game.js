@@ -3,7 +3,7 @@ import Ball from "/src/ball";
 import InputHandler from "/src/input";
 // import Brick from "/src/brick";
 
-import {buildLevel, level1} from "/src/levels";
+import { buildLevel, level1 } from "/src/levels";
 
 export default class Game {
 	constructor(gameWidth, gameHeight) {
@@ -24,6 +24,7 @@ export default class Game {
 	update(deltaTime) {
 		this.iHandler.handlekeys();
 		this.gameObjects.forEach(object => object.update(deltaTime));
+		this.gameObjects = this.gameObjects.filter(object => !object.remove);
 	}
 
 	draw(ctx) {

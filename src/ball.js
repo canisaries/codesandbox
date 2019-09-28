@@ -1,3 +1,5 @@
+import { detectCollision, HITDATA } from "./collisiondetection.js";
+
 export default class Ball {
 	constructor(game) {
 		this.game = game;
@@ -27,8 +29,12 @@ export default class Ball {
 
 		// paddle check
 
-		if (this.paddleHit()) {
+		let paddlehit = detectCollision(this, this.game.paddle);
+
+		if (paddlehit === HITDATA.VERTICAL) {
 			this.speed.y *= -1;
+		} else if (paddlehit === HITDATA.HORIZONTAL) {
+			this.speed.x *= -1;
 		}
 
 		// edge checks
@@ -50,6 +56,7 @@ export default class Ball {
 		// anything else?
 	}
 
+	/* REPLACING WITH DETECTCOLLISION
 	paddleHit() {
 		let paddle = this.game.paddle;
 
@@ -76,6 +83,7 @@ export default class Ball {
 
 		return false;
 	}
+	*/
 
 	reset() {
 		this.x = this.startstate.x;
