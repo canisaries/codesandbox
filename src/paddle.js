@@ -37,9 +37,17 @@ export default class Paddle {
 
 		// Decrease absolute speed (deceleration)
 		if (this.speed < 0) {
-			this.speed += 1;
+			this.speed += 2;
+			// don't overshoot!
+			if (this.speed > 0) {
+				this.speed = 0;
+			}
 		} else if (this.speed > 0) {
-			this.speed -= 1;
+			this.speed -= 2;
+			// don't overshoot!
+			if (this.speed < 0) {
+				this.speed = 0;
+			}
 		}
 
 		// anything else here???
