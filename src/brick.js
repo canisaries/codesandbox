@@ -9,7 +9,7 @@ export default class Brick {
   }
 
   update(deltaTime) {
-    // check if hit
+    // check if hit and from where
   }
 
   draw(ctx) {
