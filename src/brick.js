@@ -12,13 +12,13 @@ export default class Brick {
 	}
 
 	update(deltaTime) {
-		let hit = detectCollision(this, this.game.paddle);
+		let hit = detectCollision(this.game.ball, this);
 
 		if (hit === HITDATA.VERTICAL) {
-			this.speed.y *= -1;
+			this.game.ball.speed.y *= -1;
 			this.remove = true;
 		} else if (hit === HITDATA.HORIZONTAL) {
-			this.speed.x *= -1;
+			this.game.ball.speed.x *= -1;
 			this.remove = true;
 		}
 	}

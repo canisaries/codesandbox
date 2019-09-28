@@ -24,6 +24,25 @@ export function detectCollision(ball, gameObject) {
 		y: ball.y + radius - ball.speed.y
 	};
 
+	// If ball is currently inside hitbox
+	if (
+		ballcoords.y < objHitbox.bottom &&
+		ballcoords.y > objHitbox.top &&
+		ballcoords.x > objHitbox.left &&
+		prevballcoords.x < objHitbox.right
+	) {
+		if (
+			prevballcoords.y > objHitbox.bottom ||
+			prevballcoords.y < objHitbox.top
+		) {
+			return HITDATA.VERTICAL;
+		} else {
+			return HITDATA.HORIZONTAL;
+		}
+		// Hit, but vertically or horizontally?
+	}
+
+	/*
 	// If both past and present ball were vertically outside object on the same side, no hit
 	if (
 		(ballcoords.y > objHitbox.bottom && prevballcoords.y > objHitbox.bottom) ||
@@ -32,12 +51,12 @@ export function detectCollision(ball, gameObject) {
 		return HITDATA.NONE;
 	}
 
-	// If the ball entered the vertical hitbox between frames, vertical hit
+	// If the ball entered the vertical hitbox between frames, vertical hit likely
 	if (
 		(ballcoords.y < objHitbox.bottom && prevballcoords.y > objHitbox.bottom) ||
 		(ballcoords.y > objHitbox.top && prevballcoords.y < objHitbox.top)
 	) {
-		return HITDATA.VERTICAL;
+		enteredvertical = true;
 	}
 
 	// If the ball was in the vertical hitbox between frames but entered the horizontal hitbox,
@@ -46,8 +65,9 @@ export function detectCollision(ball, gameObject) {
 		(ballcoords.x > objHitbox.left && prevballcoords.x < objHitbox.left) ||
 		(ballcoords.x < objHitbox.right && prevballcoords.x > objHitbox.right)
 	) {
-		return HITDATA.HORIZONTAL;
+		enteredhorizontal = true;
 	}
+	*/
 
 	/*
 
@@ -124,5 +144,5 @@ export function detectCollision(ball, gameObject) {
   /
   */
 
-	return false;
+	return HITDATA.NONE;
 }
