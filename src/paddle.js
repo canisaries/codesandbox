@@ -9,13 +9,17 @@ export default class Paddle {
 		this.leftedge = 0;
 		this.rightedge = game.gameWidth - this.width;
 
+		this.image = document.getElementById("img_paddle");
+
 		this.x = game.gameWidth / 2 - this.width / 2;
 		this.y = game.gameHeight - this.height - 10;
 	}
 
 	draw(ctx) {
-		ctx.fillStyle = "#036";
-		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+		// OLD
+		//ctx.fillStyle = "#036";
+		//ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 
 	update(deltaTime) {

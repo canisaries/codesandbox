@@ -21,7 +21,6 @@ export default class InputHandler {
 					this.rightpressed = true;
 					break;
 				case 27:
-					console.log("ESC PRESS DETECTED");
 					// Ignore all esc presses after first one until esc released again
 					if (this.escheld === false) {
 						this.escpending = true;
@@ -43,7 +42,6 @@ export default class InputHandler {
 					break;
 				case 27:
 					this.escheld = false;
-					console.log("ESC RELEASE DETECTED AND ACCEPTED");
 					break;
 				default:
 					break;
@@ -59,7 +57,6 @@ export default class InputHandler {
 			this.game.paddle.move(right);
 		}
 		if (this.escpending) {
-			console.log("CALLING TOGGLEPAUSE");
 			this.game.togglePause();
 			this.escpending = false;
 		}

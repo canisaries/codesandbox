@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Brick Breaker</title>
+		<meta charset="UTF-8" />
 
-<head>
+		<style>
+			#canvas {
+				border: 1px solid black;
+			}
 
-	<title>Brick Breaker</title>
-	<meta charset="UTF-8" />
+			img {
+				display: none;
+			}
+		</style>
+	</head>
 
-	<style>
+	<body>
+		<img id="img_ball" src="assets/images/ball.png" />
+		<img id="img_brick" src="assets/images/brick.png" />
+		<img id="img_paddle" src="assets/images/paddle.png" />
 
-		#canvas {
-			border: 1px solid black;
-		}
+		<canvas id="canvas" width="800" height="600"></canvas>
 
-		img {
-			display: none;
-		}
-
-	</style>
-
-</head>
-
-<body>
-	<img id = "img_ball" src = "assets/images/ball.png">
-	<img id = "img_brick" src = "assets/images/brick.png">
-
-	<canvas id = "canvas" width="800" height="600"></canvas>
-
-	<script src="src/index.js"></script>
-</body>
-
+		<script src="src/index.js"></script>
+	</body>
 </html>
