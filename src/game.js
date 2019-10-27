@@ -13,9 +13,10 @@ const GAMESTATE = {
 };
 
 export default class Game {
-	constructor(gameWidth, gameHeight) {
+	constructor(gameWidth, gameHeight, ctx) {
 		this.gameWidth = gameWidth;
 		this.gameHeight = gameHeight;
+		this.ctx = ctx;
 	}
 
 	start() {
@@ -39,15 +40,23 @@ export default class Game {
 		this.gameObjects = this.gameObjects.filter(object => !object.remove);
 	}
 
-	draw(ctx) {
-		ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
-		this.gameObjects.forEach(object => object.draw(ctx));
+	draw() {
+		if (this.state === GAMESTATE.PAUSED) return;
+
+		this.ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
+		this.gameObjects.forEach(object => object.draw(this.ctx));
+	}
+
+	drawPauseText() {
+		this.ctx.font = "30px Arial";
+		this.ctx.fillText("PAUSED", 24, 42);
 	}
 
 	togglePause() {
 		if (this.state === GAMESTATE.PAUSED) {
 			this.state = GAMESTATE.RUNNING;
 		} else {
+			this.drawPauseText();
 			this.state = GAMESTATE.PAUSED;
 		}
 	}
