@@ -2,10 +2,13 @@ var left = "LEFT";
 var right = "RIGHT";
 
 export default class InputHandler {
-	constructor(paddle) {
+	constructor(game) {
 		this.leftpressed = false;
 		this.rightpressed = false;
-		this.paddle = paddle;
+		this.escpending = false;
+		this.escheld = false;
+
+		this.game = game;
 
 		// Event listeners
 
@@ -16,6 +19,14 @@ export default class InputHandler {
 					break;
 				case 39:
 					this.rightpressed = true;
+					break;
+				case 27:
+					console.log("ESC PRESS DETECTED");
+					// Ignore all esc presses after first one until esc released again
+					if (this.escheld === false) {
+						this.escpending = true;
+						this.escheld = true;
+					}
 					break;
 				default:
 					break;
@@ -30,6 +41,10 @@ export default class InputHandler {
 				case 39:
 					this.rightpressed = false;
 					break;
+				case 27:
+					this.escheld = false;
+					console.log("ESC RELEASE DETECTED AND ACCEPTED");
+					break;
 				default:
 					break;
 			}
@@ -38,10 +53,15 @@ export default class InputHandler {
 
 	handlekeys() {
 		if (this.leftpressed) {
-			this.paddle.move(left);
+			this.game.paddle.move(left);
 		}
 		if (this.rightpressed) {
-			this.paddle.move(right);
+			this.game.paddle.move(right);
+		}
+		if (this.escpending) {
+			console.log("CALLING TOGGLEPAUSE");
+			this.game.togglePause();
+			this.escpending = false;
 		}
 	}
 }
