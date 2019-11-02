@@ -48,7 +48,11 @@ export default class Game {
 		this.gameObjects.forEach(object => object.draw(this.ctx));
 	}
 
-	drawPauseText() {
+	drawPauseScreen() {
+		// Transparent black overlay
+		this.ctx.fillStyle = "rgba(0,0,0,0.5)";
+		this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+		// Pause text
 		this.ctx.font = "30px Arial";
 		this.ctx.fillStyle = "#ccc";
 		this.ctx.fillText("PAUSED", 24, 42);
@@ -58,7 +62,7 @@ export default class Game {
 		if (this.state === GAMESTATE.PAUSED) {
 			this.state = GAMESTATE.RUNNING;
 		} else {
-			this.drawPauseText();
+			this.drawPauseScreen();
 			this.state = GAMESTATE.PAUSED;
 		}
 	}
