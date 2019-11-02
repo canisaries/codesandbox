@@ -55,7 +55,8 @@ export default class Game {
 		// Pause text
 		this.ctx.font = "30px Arial";
 		this.ctx.fillStyle = "#ccc";
-		this.ctx.fillText("PAUSED", 24, 42);
+		this.ctx.textAlign = "center";
+		this.ctx.fillText("PAUSED", this.gameWidth / 2, this.gameHeight / 2);
 	}
 
 	togglePause() {
