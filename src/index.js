@@ -7,20 +7,19 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 
 let game = new Game(GAME_WIDTH, GAME_HEIGHT, ctx);
-game.start();
 
 let lastTime = 0;
 
 function gameLoop(timestamp) {
-	let deltaTime = timestamp - lastTime;
-	lastTime = timestamp;
+  let deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
 
-	if (deltaTime) {
-		game.update(deltaTime);
-		game.draw();
-	}
+  if (deltaTime) {
+    game.update(deltaTime);
+    game.draw();
+  }
 
-	requestAnimationFrame(gameLoop);
+  requestAnimationFrame(gameLoop);
 }
 
 gameLoop();

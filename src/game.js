@@ -23,6 +23,8 @@ export default class Game {
     this.paddle = new Paddle(this);
     this.ball = new Ball(this);
     this.iHandler = new InputHandler(this);
+
+    this.gameObjects = [];
   }
 
   start() {
