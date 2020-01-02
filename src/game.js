@@ -6,65 +6,88 @@ import InputHandler from "/src/input";
 import { buildLevel, level1 } from "/src/levels";
 
 const GAMESTATE = {
-	PAUSED: 0,
-	RUNNING: 1,
-	MENU: 2,
-	GAMEOVER: 3
+  PAUSED: 0,
+  RUNNING: 1,
+  MENU: 2,
+  GAMEOVER: 3
 };
 
 export default class Game {
-	constructor(gameWidth, gameHeight, ctx) {
-		this.gameWidth = gameWidth;
-		this.gameHeight = gameHeight;
-		this.ctx = ctx;
-	}
+  constructor(gameWidth, gameHeight, ctx) {
+    this.gameWidth = gameWidth;
+    this.gameHeight = gameHeight;
+    this.ctx = ctx;
 
-	start() {
-		this.state = GAMESTATE.RUNNING;
+    this.state = GAMESTATE.MENU;
 
-		this.paddle = new Paddle(this);
-		this.ball = new Ball(this);
-		this.iHandler = new InputHandler(this);
+    this.paddle = new Paddle(this);
+    this.ball = new Ball(this);
+    this.iHandler = new InputHandler(this);
+  }
 
-		let bricks = buildLevel(this, level1);
+  start() {
+    let bricks = buildLevel(this, level1);
 
-		this.gameObjects = [this.paddle, this.ball, ...bricks];
-	}
+    this.gameObjects = [this.paddle, this.ball, ...bricks];
 
-	update(deltaTime) {
-		this.iHandler.handlekeys();
+    this.state = GAMESTATE.RUNNING;
+  }
 
-		if (this.state === GAMESTATE.PAUSED) return;
+  update(deltaTime) {
+    this.iHandler.handlekeys();
 
-		this.gameObjects.forEach(object => object.update(deltaTime));
-		this.gameObjects = this.gameObjects.filter(object => !object.remove);
-	}
+    if (this.state === GAMESTATE.PAUSED || this.state === GAMESTATE.MENU)
+      return;
 
-	draw() {
-		if (this.state === GAMESTATE.PAUSED) return;
+    this.gameObjects.forEach(object => object.update(deltaTime));
+    this.gameObjects = this.gameObjects.filter(object => !object.remove);
+  }
 
-		this.ctx.fillStyle = "#040F22";
-		this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-		this.gameObjects.forEach(object => object.draw(this.ctx));
-	}
+  draw() {
+    if (this.state === GAMESTATE.PAUSED) return;
 
-	drawPauseScreen() {
-		// Transparent black overlay
-		this.ctx.fillStyle = "rgba(0,0,0,0.5)";
-		this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-		// Pause text
-		this.ctx.font = "30px Arial";
-		this.ctx.fillStyle = "#ccc";
-		this.ctx.textAlign = "center";
-		this.ctx.fillText("PAUSED", this.gameWidth / 2, this.gameHeight / 2);
-	}
+    if (this.state === GAMESTATE.MENU) {
+      this.drawMenu();
+      return;
+    }
 
-	togglePause() {
-		if (this.state === GAMESTATE.PAUSED) {
-			this.state = GAMESTATE.RUNNING;
-		} else {
-			this.drawPauseScreen();
-			this.state = GAMESTATE.PAUSED;
-		}
-	}
+    this.ctx.fillStyle = "#040F22";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+    this.gameObjects.forEach(object => object.draw(this.ctx));
+  }
+
+  drawPauseScreen() {
+    // Transparent black overlay
+    this.ctx.fillStyle = "rgba(0,0,0,0.5)";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+    // Pause text
+    this.ctx.font = "30px Arial";
+    this.ctx.fillStyle = "#ccc";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("PAUSED", this.gameWidth / 2, this.gameHeight / 2);
+  }
+
+  drawMenu() {
+    // Transparent black overlay
+    this.ctx.fillStyle = "rgba(0,0,0,1)";
+    this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+    // Pause text
+    this.ctx.font = "30px Arial";
+    this.ctx.fillStyle = "#ccc";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText(
+      "Press SPACE to Begin",
+      this.gameWidth / 2,
+      this.gameHeight / 2
+    );
+  }
+
+  togglePause() {
+    if (this.state === GAMESTATE.PAUSED) {
+      this.state = GAMESTATE.RUNNING;
+    } else {
+      this.drawPauseScreen();
+      this.state = GAMESTATE.PAUSED;
+    }
+  }
 }
