@@ -57,35 +57,6 @@ export default class Ball {
     // anything else?
   }
 
-  /* REPLACING WITH DETECTCOLLISION
-	paddleHit() {
-		let paddle = this.game.paddle;
-
-		// check x
-
-		let center_of_ball = this.x + this.diameter / 2;
-		// If ball is not within paddle's horizontal coordinates, no hit
-		if (center_of_ball < paddle.x || center_of_ball > paddle.x + paddle.width) {
-			return false;
-		}
-
-		// check y
-
-		let bottom_of_ball = this.y + this.diameter;
-		// If bottom of ball was above paddle top last frame
-		// but now is below or on it AND the ball is moving down, it has hit
-		if (
-			bottom_of_ball > paddle.y &&
-			bottom_of_ball - this.speed.y <= paddle.y &&
-			this.speed.y > 0
-		) {
-			return true;
-		}
-
-		return false;
-	}
-	*/
-
   reset() {
     this.x = this.startstate.x;
     this.y = this.startstate.y;

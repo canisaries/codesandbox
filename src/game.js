@@ -3,13 +3,14 @@ import Ball from "/src/ball";
 import InputHandler from "/src/input";
 // import Brick from "/src/brick";
 
-import { buildLevel, level1 } from "/src/levels";
+import { buildLevel, level1, level2 } from "/src/levels";
 
 const GAMESTATE = {
   PAUSED: 0,
   RUNNING: 1,
   MENU: 2,
-  GAMEOVER: 3
+  GAMEOVER: 3,
+  NEWLEVEL: 4
 };
 
 export default class Game {
@@ -24,20 +25,23 @@ export default class Game {
     this.ball = new Ball(this);
     this.iHandler = new InputHandler(this);
 
+    this.bricks = [];
     this.gameObjects = [];
     this.lives = 3;
+    this.levels = [level1, level2];
+    this.currentlevel = 0; // index in level array
 
     this.drawMenu();
   }
 
   start() {
-    if (this.state !== GAMESTATE.MENU) {
+    if (this.state !== GAMESTATE.MENU && this.state !== GAMESTATE.NEWLEVEL) {
       return;
     }
 
-    let bricks = buildLevel(this, level1);
-
-    this.gameObjects = [this.paddle, this.ball, ...bricks];
+    this.bricks = buildLevel(this, this.levels[this.currentlevel]);
+    this.ball.reset();
+    this.gameObjects = [this.paddle, this.ball];
 
     this.state = GAMESTATE.RUNNING;
   }
@@ -46,24 +50,44 @@ export default class Game {
     this.iHandler.handlekeys();
 
     if (this.lives === 0 && this.state !== GAMESTATE.GAMEOVER) {
-      this.state = GAMESTATE.GAMEOVER;
-      this.gameObjects = [];
-      this.drawGameOver();
+      this.endGame();
       return;
     }
 
     if (this.state !== GAMESTATE.RUNNING) return;
 
-    this.gameObjects.forEach(object => object.update(deltaTime));
-    this.gameObjects = this.gameObjects.filter(object => !object.remove);
+    if (this.bricks.length === 0) {
+      this.currentlevel++;
+
+      // if last level cleared, end game
+      if (this.currentlevel >= this.levels.length) {
+        this.endGame();
+        return;
+      }
+
+      // otherwise next level
+      this.state = GAMESTATE.NEWLEVEL;
+      this.start();
+    }
+
+    [...this.gameObjects, ...this.bricks].forEach(object =>
+      object.update(deltaTime)
+    );
+
+    this.bricks = this.bricks.filter(brick => !brick.remove);
   }
 
   draw() {
     if (this.state !== GAMESTATE.RUNNING) return;
 
+    // Background
     this.ctx.fillStyle = "#040F22";
     this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-    this.gameObjects.forEach(object => object.draw(this.ctx));
+
+    // Objects
+    [...this.gameObjects, ...this.bricks].forEach(object =>
+      object.draw(this.ctx)
+    );
   }
 
   drawPauseScreen() {
@@ -104,5 +128,11 @@ export default class Game {
       this.drawPauseScreen();
       this.state = GAMESTATE.PAUSED;
     }
+  }
+
+  endGame() {
+    this.state = GAMESTATE.GAMEOVER;
+    this.gameObjects = [];
+    this.drawGameOver();
   }
 }
