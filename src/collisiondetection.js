@@ -32,7 +32,7 @@ export function detectCollision(ball, gameObject) {
 
   // Formula of line: y = kx + b
   let k = ball.speed.y / ball.speed.x;
-  let b = k * ball.x - ball.y;
+  let b = ball.y - k * ball.x;
 
   // Intersection x/y for different edges
   let ver_intersect = 0;
@@ -41,10 +41,10 @@ export function detectCollision(ball, gameObject) {
   // At what point does line intersect with hitbox top/bottom edge
   if (ball.speed.y > 0) {
     // If ball is moving down, check intersection with top
-    ver_intersect = (b + objHitbox.top) / k;
+    ver_intersect = (objHitbox.top - b) / k;
   } else {
     // If ball is moving up, check intersection with bottom
-    ver_intersect = (b + objHitbox.bottom) / k;
+    ver_intersect = (objHitbox.bottom - b) / k;
   }
 
   // At what point does line intersect with hitbox left/right edge
@@ -58,38 +58,23 @@ export function detectCollision(ball, gameObject) {
     hor_intersect = k * objHitbox.right + b;
   }
 
-  let horhit = false;
-  let verhit = false;
+  /*
+  console.log("K and B:");
+  console.log(k);
+  console.log(b);
+  */
 
   // Check if vertical collision was between left and right edges
   // (-> vertical hit) or horizontal collision was between top and bottom
   // (-> horizontal hit). Diagonal hits are considered vertical.
 
   if (ver_intersect < objHitbox.right && ver_intersect > objHitbox.left) {
-    verhit = true;
+    return HITDATA.VERTICAL;
   }
 
   if (hor_intersect < objHitbox.bottom && hor_intersect > objHitbox.top) {
-    horhit = true;
+    return HITDATA.HORIZONTAL;
   }
 
-  if (horhit && !verhit) return HITDATA.HORIZONTAL;
-  if (!horhit && verhit) return HITDATA.VERTICAL;
-  if (!horhit && !verhit) {
-    console.log("NEITHER");
-    console.log("R VER L");
-    console.log(objHitbox.right);
-    console.log(ver_intersect);
-    console.log(objHitbox.left);
-    console.log("TOP HOR BOTTOM");
-    console.log(objHitbox.top);
-    console.log(hor_intersect);
-    console.log(objHitbox.bottom);
-  } else {
-    console.log("both");
-  }
-
-  // DEBUGGING +++
   return HITDATA.NONE;
-  // TODO +++
 }
