@@ -48,6 +48,7 @@ export function detectCollision(ball, gameObject) {
   }
 
   // At what point does line intersect with hitbox left/right edge
+  // TODO something is up here, getting very large negatives
 
   if (ball.speed.x > 0) {
     // If ball is moving right, check intersection with left side
@@ -74,8 +75,21 @@ export function detectCollision(ball, gameObject) {
 
   if (horhit && !verhit) return HITDATA.HORIZONTAL;
   if (!horhit && verhit) return HITDATA.VERTICAL;
+  if (!horhit && !verhit) {
+    console.log("NEITHER");
+    console.log("R VER L");
+    console.log(objHitbox.right);
+    console.log(ver_intersect);
+    console.log(objHitbox.left);
+    console.log("TOP HOR BOTTOM");
+    console.log(objHitbox.top);
+    console.log(hor_intersect);
+    console.log(objHitbox.bottom);
+  } else {
+    console.log("both");
+  }
 
-  // If both hits are found, find out which was first
-
+  // DEBUGGING +++
+  return HITDATA.NONE;
   // TODO +++
 }
