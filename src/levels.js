@@ -1,12 +1,5 @@
 import Brick from "/src/brick";
 
-export const level1 = [
-  //[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  //[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  //[0, 1, 1, 0, 0, 0, 0, 1, 1, 0]
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0] // temp simple
-];
-
 export function buildLevel(game, level) {
   let bricks = [];
 
@@ -20,28 +13,27 @@ export function buildLevel(game, level) {
   return bricks;
 }
 
-export const level2 = [
-  //[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-  //[0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
-  //[0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
-  //[0, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+const level1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
+
+const level2 = [
   [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
   [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-  [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-  [1, 0, 1, 0, 1, 1, 0, 1, 0, 1] // temp test for side hits
+  [1, 0, 1, 0, 1, 1, 0, 1, 0, 1]
 ];
 
-export const level3 = [
+const level3 = [
   [0, 1, 0, 1, 1, 1, 1, 0, 1, 0],
   [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
   [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
   [1, 0, 1, 0, 1, 1, 0, 1, 0, 1]
 ];
 
-export const level4 = [
+const level4 = [
   [0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
   [0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
   [0, 1, 1, 1, 0, 1, 0, 0, 1, 0],
   [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
   [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
 ];
+
+export const levelpack = [level1, level2, level3, level4];

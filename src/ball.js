@@ -53,8 +53,6 @@ export default class Ball {
       this.game.lives = this.game.lives - 1;
       if (this.game.lives !== 0) this.reset();
     }
-
-    // anything else?
   }
 
   reset() {

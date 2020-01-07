@@ -72,18 +72,3 @@ export default class InputHandler {
     }
   }
 }
-
-/* Old version
-		document.onkeydown = function(event) {
-			switch (event.keyCode) {
-				case 37:
-					paddle.move(left);
-					break;
-				case 39:
-					paddle.move(right);
-					break;
-				default:
-					break;
-			}
-		};
-*/
